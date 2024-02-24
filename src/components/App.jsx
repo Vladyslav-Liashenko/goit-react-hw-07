@@ -3,7 +3,7 @@ import { SearchBox } from './SearchBox/SearchBox';
 import { ContactList } from './ContactList/ContactList';
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchContacts } from '../redux/contactSlice';
+import { fetchContacts } from '../redux/operations';
 
 function App() {
 

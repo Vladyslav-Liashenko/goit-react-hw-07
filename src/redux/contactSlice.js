@@ -1,7 +1,7 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import axios from 'axios';
+import { fetchContacts } from './operations';
 
 const contactSlice = createSlice({
   name: 'contacts',
@@ -27,7 +27,7 @@ const contactSlice = createSlice({
         state.loading = true;
         state.error = false;
       })
-      .addCase(fetchContacts.fulfilled, (state, {payload}) => {
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
         state.loading = false;
         state.items = payload;
       })
@@ -36,14 +36,6 @@ const contactSlice = createSlice({
         state.error = true;
       }),
 });
-
-export const fetchContacts = createAsyncThunk('contacts/fetch', async () => {
-  const response = await axios.get(
-    'https://65d9c241bcc50200fcdc0d3c.mockapi.io/contacts'
-  );
-  return response.data;
-});
-console.dir(fetchContacts);
 
 export const { addContact, deleteContact } = contactSlice.actions;
 
