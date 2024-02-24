@@ -1,7 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import { fetchContacts } from './operations';
+import { fetchContacts, addContact, deleteContact } from './operations';
+
+const handlePending = state => {
+  state.loading = true;
+  state.error = false;
+};
+const handleRejected = (state, action) => {
+  state.loading = false;
+  state.error = action.payload;
+};
 
 const contactSlice = createSlice({
   name: 'contacts',
@@ -10,34 +19,34 @@ const contactSlice = createSlice({
     loading: false,
     error: false,
   },
-  reducers: {
-    addContact: (state, { payload }) => {
-      state.items.push(payload);
-    },
-    deleteContact: (state, action) => {
-      const index = state.items.findIndex(
-        contact => contact.id === action.payload
-      );
-      state.items.splice(index, 1);
-    },
-  },
   extraReducers: builder =>
     builder
-      .addCase(fetchContacts.pending, state => {
-        state.loading = true;
-        state.error = false;
-      })
+      .addCase(fetchContacts.pending, handlePending)
       .addCase(fetchContacts.fulfilled, (state, { payload }) => {
         state.loading = false;
+        state.error = null;
         state.items = payload;
       })
-      .addCase(fetchContacts.rejected, state => {
-        state.loading = false;
-        state.error = true;
-      }),
-});
+      .addCase(fetchContacts.rejected, handleRejected)
 
-export const { addContact, deleteContact } = contactSlice.actions;
+      .addCase(addContact.pending, handlePending)
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        state.loading = false;
+        state.error = null;
+        state.items.push(payload);
+      })
+      .addCase(addContact.rejected, handleRejected)
+
+      .addCase(deleteContact.pending, handlePending)
+      .addCase(deleteContact.fulfilled, (state, action) => {
+        state.loading = false;
+        const index = state.items.findIndex(
+          contact => contact.id === action.payload
+        );
+        state.items.splice(index, 1);
+      })
+      .addCase(deleteContact.rejected, handleRejected),
+});
 
 const persistConfig = {
   key: 'root',

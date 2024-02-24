@@ -2,8 +2,7 @@ import styled from './Contact.module.css';
 import userIcon from '../../../assets/person-fill.svg';
 import telIcon from '../../../assets/telephone-fill.svg';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from '../../../redux/contactSlice';
-
+import { deleteContact } from '../../../redux/operations';
 
 export const Contact = ({ name, number, contactId }) => {
   const dispatch = useDispatch();
