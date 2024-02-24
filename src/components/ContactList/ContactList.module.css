@@ -1,0 +1,17 @@
+.ul {
+  gap: 20px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  padding: 0;
+}
+.contact {
+  min-width: 300px;
+  border: 3px solid;
+  border-radius: 10px;
+  padding: 10px;
+  list-style-type: none;
+}
+h2 {
+  margin: 0;
+}
