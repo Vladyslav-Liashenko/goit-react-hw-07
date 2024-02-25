@@ -19,6 +19,7 @@ export const SearchBox = () => {
         id="name"
         onChange={handleSearchChange}
         value={filterState}
+        placeholder='Search'
       />
     </div>
   );

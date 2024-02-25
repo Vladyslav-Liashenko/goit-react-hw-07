@@ -7,7 +7,7 @@
 }
 .contact {
   min-width: 300px;
-  border: 3px solid;
+  border: 3px solid rgb(238, 255, 0);
   border-radius: 10px;
   padding: 10px;
   list-style-type: none;
